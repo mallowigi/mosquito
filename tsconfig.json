@@ -3,17 +3,17 @@
     "target": "ES5",
     "module": "commonjs",
     "noEmitOnError": false,
+    "noEmit": true,
     "rootDir": ".",
     "emitDecoratorMetadata": true,
+    "suppressExcessPropertyErrors":true,
+    "suppressImplicitAnyIndexErrors":true,
     "experimentalDecorators": true,
     "sourceMap": false,
     "sourceRoot": "",
     "inlineSourceMap": false,
     "inlineSources": false
   },
-  "files": [
-    "app/app.ts"
-  ],
   "exclude": [
     "node_modules"
   ],

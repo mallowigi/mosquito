@@ -1,7 +1,13 @@
 var path = require('path');
-
+var webpack = require('webpack');
 
 module.exports = {
+  devtool: 'eval-source-map',
+  debug:true,
+  cache:true,
+  displayErrorDetails: true,
+  stats: {colors: true, reasons:true},
+
   entry: [
     path.normalize('es6-shim/es6-shim.min'),
     'reflect-metadata',
@@ -16,6 +22,12 @@ module.exports = {
   },
   module: {
     loaders: [
+      {test: /\.html$/, loader: 'html'},
+      {test: /\.jade$/, loader: 'template-html'},
+      {test: /\.json$/, loader: 'json'},
+      {test: /\.css$/, loader: 'raw!autoprefixer?browsers=last 2 versions'},
+      {test: /\.scss$/, loader: 'raw!sass!autoprefixer?browsers=last 2 versions'},
+      {test: /\.png$/, loader: "url?limit=1000000000&mimetype=images/png"},
       {
         test: /\.ts$/,
         loader: 'awesome-typescript',

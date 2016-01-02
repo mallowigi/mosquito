@@ -3,21 +3,26 @@ import {Page1} from './pages/page1/page1';
 import {Page2} from './pages/page2/page2';
 import {Page3} from './pages/page3/page3';
 
+var appView = require('./app.html');
 
 @App({
-  templateUrl: 'build/app.html'
+    template: appView
 })
 export class MyApp {
-  constructor(platform: Platform) {
+    public tab1Root;
+    public tab2Root;
+    public tab3Root;
 
-    // this tells the tabs component which Pages
-    // should be each tab's root Page
-    this.tab1Root = Page1;
-    this.tab2Root = Page2;
-    this.tab3Root = Page3;
+    constructor(platform:Platform) {
 
-    platform.ready().then(() => {
-      // Do any necessary cordova or native calls here now that the platform is ready
-    });
-  }
+        // this tells the tabs component which Pages
+        // should be each tab's root Page
+        this.tab1Root = Page1;
+        this.tab2Root = Page2;
+        this.tab3Root = Page3;
+
+        platform.ready().then(() => {
+            // Do any necessary cordova or native calls here now that the platform is ready
+        });
+    }
 }

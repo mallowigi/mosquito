@@ -1,12 +1,14 @@
 import {App, Platform} from 'ionic-framework/ionic';
-import {Page1} from './pages/page1/page1';
-import {Page2} from './pages/page2/page2';
-import {Page3} from './pages/page3/page3';
+import {HomePage} from './pages/homepage/homepage';
+import {MyDocumentsPage} from './pages/mydocs/myDocumentsPage';
+import {SettingsPage} from './pages/settings/settingsPage';
 
-var appView = require('./app.html');
+const appView = require('./app.html');
+const appStyles = require('./app.scss');
 
 @App({
-    template: appView
+    template: appView,
+    styles: [appStyles]
 })
 export class MyApp {
     public tab1Root;
@@ -17,9 +19,9 @@ export class MyApp {
 
         // this tells the tabs component which Pages
         // should be each tab's root Page
-        this.tab1Root = Page1;
-        this.tab2Root = Page2;
-        this.tab3Root = Page3;
+        this.tab1Root = HomePage;
+        this.tab2Root = MyDocumentsPage;
+        this.tab3Root = SettingsPage;
 
         platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready

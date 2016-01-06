@@ -1,27 +1,20 @@
-import {App, Platform} from 'ionic-framework/ionic';
-import {HomePage} from './pages/homepage/homepage';
-import {MyDocumentsPage} from './pages/mydocs/myDocumentsPage';
-import {SettingsPage} from './pages/settings/settingsPage';
+/**
+ * Created by helio on 07/01/2016.
+ */
 
-const appView = require('./app.html');
-const appStyles = require('./app.scss');
+import {App} from "ionic-framework/ionic";
+import {Platform} from "ionic-framework/ionic";
+import {TabsPage} from "./pages/tabs/tabsPage";
 
 @App({
-    template: appView,
-    styles: [appStyles]
+    template: `<ion-nav [root]="root"></ion-nav>`
 })
 export class MyApp {
-    public tab1Root;
-    public tab2Root;
-    public tab3Root;
+    private root;
 
     constructor(platform:Platform) {
 
-        // this tells the tabs component which Pages
-        // should be each tab's root Page
-        this.tab1Root = HomePage;
-        this.tab2Root = MyDocumentsPage;
-        this.tab3Root = SettingsPage;
+        this.root = TabsPage;
 
         platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready

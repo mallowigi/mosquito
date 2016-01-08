@@ -1,9 +1,41 @@
 <ion-navbar *navbar hideBackButton>
-    <ion-title>LOGO</ion-title>
+
+    <ion-segment [(ngModel)]="filter" (change)="filterList()">
+        <ion-segment-button value="all">
+            All
+        </ion-segment-button>
+        <ion-segment-button value="friends">
+            Favorites
+        </ion-segment-button>
+    </ion-segment>
 </ion-navbar>
 
-<ion-content padding class="has-header">
-    <ion-row>
-        <button full block (click)="openMenu()">Show Action sheet</button>
-    </ion-row>
+<ion-content class="has-header">
+    <ion-searchbar primary
+                   [(ngModel)]="queryText"
+                   (input)="filterList()"
+                   placeholder="Search">
+    </ion-searchbar>
+
+    <ion-list [hidden]="!users.length">
+
+        <ion-item-group *ngFor="#user of users" [hidden]="user.hidden">
+            <ion-card>
+
+                <ion-card-header>
+                    {{user.name}}
+                </ion-card-header>
+
+                <ion-card-content>
+                    Conenta
+                </ion-card-content>
+
+            </ion-card>
+        </ion-item-group>
+
+    </ion-list>
+
+    <ion-list-header [hidden]="users.length">
+        There is nothing here
+    </ion-list-header>
 </ion-content>

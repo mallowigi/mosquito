@@ -1,0 +1,12 @@
+{
+  "friends":[
+    {
+      "name": "Mike",
+      "friend": true
+    },
+    {
+      "name": "John"
+    }
+  ],
+  "documents": []
+}

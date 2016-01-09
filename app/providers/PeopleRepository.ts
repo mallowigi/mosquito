@@ -1,32 +1,36 @@
 import {Injectable} from "angular2/core";
 import {Http} from "angular2/http";
 import {User} from "./User";
-import * as _ from "lodash";
+import * as R from "ramda";
+import {Filters} from "./Filters";
 
 @Injectable()
 export class PeopleRepository {
-    private http:Http;
-    private user:User;
-    private data;
+    private http: Http;
+    private user: User;
 
-    constructor(http:Http, user:User) {
+    constructor(http: Http, user: User) {
         this.http = http;
         this.user = user;
     }
 
-    loadData() {
+    loadData(): Promise<User> {
         return new Promise((resolve, reject) => {
             this.http.get('data/data.json')
                 .subscribe(res => {
-                    this.data = res.json();
-                    resolve(this.data);
+                    let data = res.json();
+                    this.user.parseData(data);
+                    resolve(this.user);
                 })
         })
     }
 
-    filterList(filter:string):Promise<Array<User>> {
-        return new Promise(resolve => {
-            resolve(filter === 'friends' ? _.filter(this.data, {friend: true}) : this.data);
-        })
+    filterList(query: string, filter: Filters): Array<User> {
+        let friends: User[] = R.prop('friends', this.user);
+        let isFavorite = (friend) => friend.favorite;
+
+        return filter === Filters.Friends ?
+            R.filter(isFavorite, friends) :
+            friends;
     }
 }

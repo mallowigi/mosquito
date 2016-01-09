@@ -2,7 +2,7 @@
   "friends":[
     {
       "name": "Mike",
-      "friend": true
+      "favorite": true
     },
     {
       "name": "John"

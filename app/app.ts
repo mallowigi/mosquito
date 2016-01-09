@@ -10,45 +10,39 @@ import {Tabs} from "ionic-framework/ionic";
 import {IonicApp} from "ionic-framework/ionic";
 import {NavController} from "ionic-framework/ionic";
 import {Config} from "ionic-framework/ionic";
-import {TutorialPage} from "./pages/tutorial/tutorial";
 import {Menu} from "ionic-framework/ionic";
 import {ViewController} from "ionic-framework/ionic";
+import {User} from "./providers/User";
+import {PeopleRepository} from "./providers/PeopleRepository";
 
 var appView = require('./app.html');
 
 @App({
     template: appView,
+    providers: [PeopleRepository, User],
     config: {}
 })
 export class MyApp {
     private root;
-    private app : IonicApp;
+    private app: IonicApp;
     private pages;
-    private menu : Menu;
 
-    constructor(app: IonicApp, platform:Platform, config: Config) {
+    public user: User;
+
+    constructor(app: IonicApp, platform: Platform, config: Config, peopleRepo: PeopleRepository) {
         this.app = app;
         this.root = TabsPage;
 
         this.pages = [
-            { title: 'List', component: TabsPage, icon: 'cube' },
+            {title: 'List', component: TabsPage, icon: 'cube'},
         ];
+
+        peopleRepo.loadData().then(user => {
+            this.user = user
+        });
 
         platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready
-        });
-    }
-
-
-    openPage(page) {
-        // find the nav component and set what the root page should be
-        // reset the nav to remove previous pages and only have this page
-        // we wouldn't want the back button to show in this scenario
-        let nav = this.app.getComponent('nav');
-        nav.setRoot(page.component).then(() => {
-            // wait for the root page to be completely loaded
-            // then close the menu
-            this.menu.close()
         });
     }
 }

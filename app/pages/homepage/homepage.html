@@ -1,10 +1,10 @@
 <ion-navbar *navbar hideBackButton>
 
     <ion-segment [(ngModel)]="filter" (change)="filterList()">
-        <ion-segment-button value="all">
+        <ion-segment-button value="0">
             All
         </ion-segment-button>
-        <ion-segment-button value="friends">
+        <ion-segment-button value="1">
             Favorites
         </ion-segment-button>
     </ion-segment>
@@ -23,7 +23,7 @@
             <ion-card>
 
                 <ion-card-header>
-                    {{user.name}}
+                    {{user.lowerName()}}
                 </ion-card-header>
 
                 <ion-card-content>

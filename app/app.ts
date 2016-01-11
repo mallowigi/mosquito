@@ -12,14 +12,15 @@ import {NavController} from "ionic-framework/ionic";
 import {Config} from "ionic-framework/ionic";
 import {Menu} from "ionic-framework/ionic";
 import {ViewController} from "ionic-framework/ionic";
-import {User} from "./providers/User";
 import {PeopleRepository} from "./providers/PeopleRepository";
+import {IUser} from "./types/IUser";
+import {User} from "./types/User";
 
 var appView = require('./app.html');
 
 @App({
     template: appView,
-    providers: [PeopleRepository, User],
+    providers: [PeopleRepository],
     config: {}
 })
 export class MyApp {
@@ -27,7 +28,7 @@ export class MyApp {
     private app: IonicApp;
     private pages;
 
-    public user: User;
+    public user: IUser;
 
     constructor(app: IonicApp, platform: Platform, config: Config, peopleRepo: PeopleRepository) {
         this.app = app;
@@ -38,7 +39,7 @@ export class MyApp {
         ];
 
         peopleRepo.loadData().then(user => {
-            this.user = user
+            this.user = new User(user);
         });
 
         platform.ready().then(() => {

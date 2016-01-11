@@ -5,8 +5,11 @@ import {ActionSheet} from "ionic-framework/ionic";
 import {Tabs} from "ionic-framework/ionic";
 import {ElementRef} from "angular2/core";
 import {PeopleRepository} from "../../providers/PeopleRepository";
-import {User} from "../../providers/User";
 import {Filters} from "../../providers/Filters";
+
+import * as _ from "lodash";
+import {IUser} from "../../types/IUser";
+import {User} from "../../types/User";
 
 const homePageView = require('./homepage.html');
 const homePageStyles = require('./homepage.scss');
@@ -14,7 +17,7 @@ const homePageStyles = require('./homepage.scss');
 @Page({
     template: homePageView,
     styles: [homePageStyles],
-    providers: [PeopleRepository, User]
+    providers: [PeopleRepository]
 })
 export class HomePage {
     private platform: Platform;
@@ -23,7 +26,7 @@ export class HomePage {
 
     public filter: Filters;
     public queryText: string;
-    public users: Array<User>;
+    public users: Array<IUser>;
 
     constructor(platform: Platform, nav: NavController, peopleRepo: PeopleRepository) {
         this.platform = platform;
@@ -35,7 +38,7 @@ export class HomePage {
 
         this.peopleRepo = peopleRepo;
         peopleRepo.loadData().then(data => {
-            this.users = data.friends;
+            this.users = _.map(data.friends, (friend) => new User(friend));
         })
     }
 

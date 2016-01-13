@@ -6,6 +6,7 @@ import {IComment} from "./IComment";
 export interface IDocument {
     title: string,
     id: number,
+    description?: string,
     author: IUser,
     created: Date,
     updated: Date,

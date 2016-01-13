@@ -1,9 +1,8 @@
-import {User} from "../providers/User";
-
+import {IDocument} from "./IDocument";
 export interface IUser {
     name: string
-    lowerName():string;
     addFriend(user: IUser);
     removeFriend(user: IUser);
     friends:IUser[];
+    documents: IDocument[];
 }

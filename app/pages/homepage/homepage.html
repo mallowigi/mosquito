@@ -17,17 +17,19 @@
                    placeholder="Search">
     </ion-searchbar>
 
-    <ion-list [hidden]="!users.length">
+    <ion-list [hidden]="!filteredDocuments.length">
 
-        <ion-item-group *ngFor="#user of users" [hidden]="user.hidden">
+        <ion-item-group *ngFor="#document of filteredDocuments">
             <ion-card>
 
                 <ion-card-header>
-                    {{user.lowerName()}}
+                    <h3>{{ document.title }}</h3>
+                    <p>{{ document.author.name }}</p>
                 </ion-card-header>
 
+
                 <ion-card-content>
-                    Conenta
+
                 </ion-card-content>
 
             </ion-card>
@@ -35,7 +37,7 @@
 
     </ion-list>
 
-    <ion-list-header [hidden]="users.length">
+    <ion-list-header [hidden]="filteredDocuments.length">
         There is nothing here
     </ion-list-header>
 </ion-content>

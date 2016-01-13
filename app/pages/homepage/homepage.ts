@@ -10,6 +10,8 @@ import {Filters} from "../../providers/Filters";
 import * as _ from "lodash";
 import {IUser} from "../../types/IUser";
 import {User} from "../../types/User";
+import {IDocument} from "../../types/IDocument";
+import {DocumentRepository} from "../../providers/DocumentRepository";
 
 const homePageView = require('./homepage.html');
 const homePageStyles = require('./homepage.scss');
@@ -17,34 +19,37 @@ const homePageStyles = require('./homepage.scss');
 @Page({
     template: homePageView,
     styles: [homePageStyles],
-    providers: [PeopleRepository]
+    providers: [PeopleRepository, DocumentRepository]
 })
 export class HomePage {
     private platform: Platform;
     private nav: NavController;
-    private peopleRepo: PeopleRepository;
+    private documentRepo: DocumentRepository;
 
     public filter: Filters;
     public queryText: string;
-    public users: Array<IUser>;
+    public documents: Array<IDocument>;
+    public filteredDocuments: IDocument[];
 
-    constructor(platform: Platform, nav: NavController, peopleRepo: PeopleRepository) {
+    constructor(platform: Platform, nav: NavController, documentRepo: DocumentRepository) {
         this.platform = platform;
         this.nav = nav;
 
         this.queryText = '';
         this.filter = Filters.All;
-        this.users = [];
+        this.documents = [];
+        this.filteredDocuments = [];
 
-        this.peopleRepo = peopleRepo;
-        peopleRepo.loadData().then(data => {
-            this.users = _.map(data.friends, (friend) => new User(friend));
-        })
+        this.documentRepo = documentRepo;
+        documentRepo.getLatest().then(docs => {
+            this.documents = docs;
+            this.filteredDocuments = docs;
+        });
     }
 
 
     filterList() {
-        this.users = this.peopleRepo.filterList(this.queryText, this.filter);
+        this.filteredDocuments = this.documentRepo.filterList(this.documents, this.queryText, this.filter);
     }
 
 }

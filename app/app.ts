@@ -15,12 +15,15 @@ import {ViewController} from "ionic-framework/ionic";
 import {PeopleRepository} from "./providers/PeopleRepository";
 import {IUser} from "./types/IUser";
 import {User} from "./types/User";
+import {UserData} from "./providers/UserData";
+
+import * as R from "ramda";
 
 var appView = require('./app.html');
 
 @App({
     template: appView,
-    providers: [PeopleRepository],
+    providers: [PeopleRepository, UserData],
     config: {}
 })
 export class MyApp {
@@ -30,7 +33,7 @@ export class MyApp {
 
     public user: IUser;
 
-    constructor(app: IonicApp, platform: Platform, config: Config, peopleRepo: PeopleRepository) {
+    constructor(app: IonicApp, platform: Platform, config: Config, peopleRepo: PeopleRepository, userData: UserData) {
         this.app = app;
         this.root = TabsPage;
 
@@ -39,7 +42,8 @@ export class MyApp {
         ];
 
         peopleRepo.loadData().then(user => {
-            this.user = new User(user);
+            userData.friends = user.friends;
+            userData.documents = user.documents;
         });
 
         platform.ready().then(() => {

@@ -1,8 +1,7 @@
 {
   "friends":[
     {
-      "name": "Mike",
-      "favorite": true
+      "name": "Mike"
     },
     {
       "name": "John"

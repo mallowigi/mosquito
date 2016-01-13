@@ -6,18 +6,16 @@ import * as _ from "lodash"
 
 import {Injectable} from "angular2/core";
 import {IUser} from "../types/IUser";
+import {IDocument} from "./IDocument";
 
 export class User implements IUser {
+    public documents: IDocument[];
     public friends: Array<IUser>;
     public name: string;
 
 
     constructor(data: IUser) {
         _.extend(this, data);
-    }
-
-    lowerName(): string {
-        return this.name.toLowerCase();
     }
 
     addFriend(friend: IUser): IUser {

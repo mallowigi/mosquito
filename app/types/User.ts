@@ -9,6 +9,7 @@ import {IUser} from "../types/IUser";
 import {IDocument} from "./IDocument";
 
 export class User implements IUser {
+    id: number;
     public documents: IDocument[];
     public friends: Array<IUser>;
     public name: string;

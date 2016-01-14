@@ -15,7 +15,8 @@
     "inlineSources": false
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "typings"
   ],
   "compileOnSave": false
 }

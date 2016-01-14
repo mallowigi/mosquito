@@ -22,10 +22,11 @@ export class DocumentRepository {
 
     getLatest(): Promise<IDocument[]> {
         return new Promise(resolve => {
-            this.http.get('data/dashboard.json')
-                .subscribe(res => {
-                    resolve(res.json().data);
-                })
+            //this.http.get('data/dashboard.json')
+            //    .subscribe(res => {
+            //        resolve(res.json().data);
+            //    })
+            resolve(this.generate());
         });
     }
 
@@ -39,5 +40,25 @@ export class DocumentRepository {
                 return documents;
         }
 
+    }
+
+    generate() {
+        var faker = require('faker');
+        return _.times(10, () => {
+            return {
+                title: faker.commerce.productName(),
+                description: faker.lorem.sentence(),
+                id: faker.random.number(),
+                author: {
+                    name: faker.internet.userName(),
+                    avatar: faker.image.avatar()
+                },
+                created: faker.date.recent(),
+                updated: faker.date.recent(),
+                imageUrl: faker.image.imageUrl(),
+                likes: faker.random.number(),
+                comments: []
+            }
+        })
     }
 }

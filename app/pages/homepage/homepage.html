@@ -22,8 +22,8 @@
         <ion-item-group *ngFor="#document of filteredDocuments">
             <ion-card>
                 <ion-item>
-                    <ion-avatar item-left *ngIf="document.author.avatar">
-                        <img src="{{ document.author.avatar }}">
+                    <ion-avatar item-left>
+                        <img src="{{ document.author.avatar || 'http://placehold.it/96' }}">
                     </ion-avatar>
                     <h2>{{ document.author.name }} posted:</h2>
                     <p>{{ document.title }}</p>
@@ -35,7 +35,7 @@
                     {{ document.description }}
                 </ion-card-content>
 
-                <ion-item>
+                <ion-item actions>
                     <button primary clear item-left>
                         <ion-icon name="thumbs-up"></ion-icon>
                         <p>{{ document.likes }}</p>
@@ -46,9 +46,9 @@
                         <div>{{ document.comments.length }} Comments</div>
                     </button>
 
-                    <ion-note item-right>
-                        {{ document.created | date:'dd/mm' }}
-                    </ion-note>
+                    <p item-right class="time-ago">
+                        {{ document.created | date}}
+                    </p>
                 </ion-item>
 
             </ion-card>

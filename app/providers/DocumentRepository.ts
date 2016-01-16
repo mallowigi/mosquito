@@ -9,18 +9,23 @@ import {Filters} from "./Filters";
 import {UserData} from "./UserData";
 
 import * as _ from "lodash";
+import {IComment} from "../types/IComment";
+import {IUser} from "../types/IUser";
+
+var faker = require('faker');
+
 
 @Injectable()
 export class DocumentRepository {
-    private http: Http;
-    private userData: UserData;
+    private http:Http;
+    private userData:UserData;
 
-    constructor(http: Http, userData: UserData) {
+    constructor(http:Http, userData:UserData) {
         this.http = http;
         this.userData = userData;
     }
 
-    getLatest(): Promise<IDocument[]> {
+    getLatest():Promise<IDocument[]> {
         return new Promise(resolve => {
             //this.http.get('data/dashboard.json')
             //    .subscribe(res => {
@@ -30,7 +35,7 @@ export class DocumentRepository {
         });
     }
 
-    filterList(documents: IDocument[], queryText: string, filter: Filters): IDocument[] {
+    filterList(documents:IDocument[], queryText:string, filter:Filters):IDocument[] {
         switch (filter) {
             case Filters.Friends:
                 return _.filter(documents, (doc) => {
@@ -43,22 +48,36 @@ export class DocumentRepository {
     }
 
     generate() {
-        var faker = require('faker');
         return _.times(10, () => {
             return {
                 title: faker.commerce.productName(),
                 description: faker.lorem.sentence(),
                 id: faker.random.number(),
-                author: {
-                    name: faker.internet.userName(),
-                    avatar: faker.image.avatar()
-                },
+                author: this.generateAuthor(),
                 created: faker.date.recent(),
                 updated: faker.date.recent(),
                 imageUrl: faker.image.imageUrl(),
                 likes: faker.random.number(),
-                comments: []
+                comments: this.generateComments()
             }
         })
+    }
+
+    private generateComments():IComment[] {
+        return _.times(faker.random.number({max: 30}), () => {
+            return {
+                message: faker.company.catchPhrase(),
+                author: this.generateAuthor(),
+                created: faker.date.recent()
+            };
+        });
+    }
+
+    private generateAuthor():IUser {
+        return {
+            name: faker.internet.userName(),
+            id: faker.random.number(),
+            avatar: faker.image.avatar()
+        };
     }
 }

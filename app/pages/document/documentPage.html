@@ -1,0 +1,28 @@
+<ion-navbar *navbar>
+    <ion-title>{{ document.title }}</ion-title>
+</ion-navbar>
+
+<ion-content padding>
+    <header>
+        <h2 text-center>{{ document.title }}</h2>
+    </header>
+
+    <section>
+        <img [src]="document.imageUrl" [alt]="document.title">
+        <p>{{ document.description }}</p>
+    </section>
+
+    <ion-item>
+        <!--<div *ngFor="#comment in document.comments">-->
+             <!--<ion-row>-->
+                 <!--<ion-col>-->
+                     <!--<ion-avatar>-->
+                         <!--<img [src]="comment.author.avatar || 'http://placehold.it/96'">-->
+                     <!--</ion-avatar>-->
+                     <!--<a>{{ comment.author.name }}</a>-->
+                 <!--</ion-col>-->
+                 <!--<ion-col>{{ comment.message }}</ion-col>-->
+             <!--</ion-row>-->
+        <!--</div>-->
+    </ion-item>
+</ion-content>

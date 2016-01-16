@@ -12,6 +12,7 @@ import {IUser} from "../../types/IUser";
 import {User} from "../../types/User";
 import {IDocument} from "../../types/IDocument";
 import {DocumentRepository} from "../../providers/DocumentRepository";
+import {DocumentPage} from "../document/documentPage";
 
 const homePageView = require('./homepage.html');
 const homePageStyles = require('./homepage.scss');
@@ -50,6 +51,10 @@ export class HomePage {
 
     filterList() {
         this.filteredDocuments = this.documentRepo.filterList(this.documents, this.queryText, this.filter);
+    }
+
+    goToDetailPage(document: IDocument) {
+        this.nav.push(DocumentPage, document);
     }
 
 }

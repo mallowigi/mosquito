@@ -20,7 +20,7 @@
     <ion-list [hidden]="!filteredDocuments.length">
 
         <ion-item-group *ngFor="#document of filteredDocuments">
-            <ion-card>
+            <ion-card (click)="goToDetailPage(document)">
                 <ion-item>
                     <ion-avatar item-left>
                         <img src="{{ document.author.avatar || 'http://placehold.it/96' }}">

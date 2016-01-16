@@ -1,4 +1,4 @@
-import {Page} from 'ionic-framework/ionic';
+import {Page, Animation} from 'ionic-framework/ionic';
 import {Platform} from "ionic-framework/ionic";
 import {NavController} from "ionic-framework/ionic";
 import {ActionSheet} from "ionic-framework/ionic";
@@ -13,28 +13,30 @@ import {User} from "../../types/User";
 import {IDocument} from "../../types/IDocument";
 import {DocumentRepository} from "../../providers/DocumentRepository";
 import {DocumentPage} from "../document/documentPage";
+import {UserData} from "../../providers/UserData";
 
 const homePageView = require('./homepage.html');
 const homePageStyles = require('./homepage.scss');
 
 @Page({
-    template: homePageView,
-    styles: [homePageStyles],
+    template : homePageView,
+    styles   : [homePageStyles],
     providers: [PeopleRepository, DocumentRepository]
 })
 export class HomePage {
-    private platform: Platform;
+
     private nav: NavController;
     private documentRepo: DocumentRepository;
+    private user: UserData;
 
     public filter: Filters;
     public queryText: string;
     public documents: Array<IDocument>;
     public filteredDocuments: IDocument[];
 
-    constructor(platform: Platform, nav: NavController, documentRepo: DocumentRepository) {
-        this.platform = platform;
+    constructor(nav: NavController, documentRepo: DocumentRepository, userData: UserData) {
         this.nav = nav;
+        this.user = userData;
 
         this.queryText = '';
         this.filter = Filters.All;
@@ -55,6 +57,30 @@ export class HomePage {
 
     goToDetailPage(document: IDocument) {
         this.nav.push(DocumentPage, document);
+    }
+
+    likeUnlike(user: IUser, element, event) {
+        event.stopPropagation();
+
+        // todo do not work
+        const like = new Animation(element);
+        const isFriend = this.user.isFriend(user);
+
+        if (!isFriend) {
+            like.before.addClass('like-before');
+            like.after.removeClass('like-before');
+        } else {
+            like.before.addClass('unlike-before');
+            like.after.removeClass('unlike-before');
+        }
+
+        const anim = new Animation();
+        anim.duration(1000);
+        anim.add(like);
+        anim.play();
+
+        // Friend/unfriend this user
+        this.user.friend(user)
     }
 
 }

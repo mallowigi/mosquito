@@ -1,3 +1,9 @@
-.page1 {
-  color:black;
+.like-before {
+  transform: scale(1.25);
+  opacity: 0.5;
+}
+
+.unlike-before {
+  transform: scale(0.75);
+  opacity: 0.5;
 }

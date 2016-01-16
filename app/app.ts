@@ -18,6 +18,7 @@ import {User} from "./types/User";
 import {UserData} from "./providers/UserData";
 
 import * as R from "ramda";
+import * as _ from "lodash";
 
 var appView = require('./app.html');
 
@@ -28,12 +29,12 @@ var appView = require('./app.html');
 })
 export class MyApp {
     private root;
-    private app: IonicApp;
+    private app:IonicApp;
     private pages;
 
-    public user: IUser;
+    public user:IUser;
 
-    constructor(app: IonicApp, platform: Platform, config: Config, peopleRepo: PeopleRepository, userData: UserData) {
+    constructor(app:IonicApp, platform:Platform, config:Config, peopleRepo:PeopleRepository, userData:UserData) {
         this.app = app;
         this.root = TabsPage;
 
@@ -42,8 +43,7 @@ export class MyApp {
         ];
 
         peopleRepo.loadData().then(user => {
-            userData.friends = user.friends;
-            userData.documents = user.documents;
+            userData.load(user);
         });
 
         platform.ready().then(() => {

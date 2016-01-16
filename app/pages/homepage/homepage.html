@@ -27,6 +27,10 @@
                     </ion-avatar>
                     <h2>{{ document.author.name }} posted:</h2>
                     <p>{{ document.title }}</p>
+
+                    <ion-icon #like name="heart" item-right class="like-btn"
+                              [isActive]="user.isFriend(document.author)"
+                              (click)="likeUnlike(document.author, like, $event)"></ion-icon>
                 </ion-item>
 
                 <img src="{{ document.imageUrl || 'http://placehold.it/300' }}">
